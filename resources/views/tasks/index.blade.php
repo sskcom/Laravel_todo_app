@@ -31,7 +31,7 @@
 
                     <div class="flex flex-col items-center">
                         <label class="w-full max-w-3xl mx-auto">
-            
+
                             <input class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-4 pl-4 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="洗濯物をする..." type="text" name="task_name" />
                             @error('task_name')
                             <div class="mt-3">
@@ -49,7 +49,7 @@
 
                 </form>
 
-                
+
                 <!-- 完了前のタスクの標示 -->
                 @if ($before_tasks->isNotEmpty())
                 <div class="max-w-7xl mx-auto mt-20">
@@ -67,7 +67,7 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
 
-                                
+
                                     @foreach ($before_tasks as $item)
                                     <tr>
                                         <td class="px-3 py-4 text-sm text-gray-500">
@@ -77,6 +77,18 @@
                                         </td>
                                         <td class="p-0 text-right text-sm font-medium">
                                             <div class="flex justify-end">
+
+                                                <div>
+                                                    
+                                                        @csrf
+                                                        @method('PUT')
+
+                                                        {{-- 追記 --}}
+                                                        <input type="hidden" name="status" value="{{$item->status}}">
+                                                        {{-- 追記 --}}
+                                                        <button type="submit" class="bg-amber-700 py-4 w-20 text-white  transition-colors text-xs">更新日<br>{{ $item->updated_at }}</button>
+                                                    
+                                                </div>
 
                                                 <div>
                                                     <form action="/dboard/{{ $item->id }}" method="post" class="inline-block text-gray-500 font-medium" role="menuitem" tabindex="-1">
@@ -113,7 +125,7 @@
                     </div>
                 </div>
                 @endif
-            
+
 
                 <!-- 完了後のタスクの標示 -->
                 @if ($after_tasks->isNotEmpty())
@@ -143,13 +155,13 @@
 
                                                 <div>
                                                     <!-- <form action="/dboard/{{ $item->id }}" method="post" class="inline-block text-gray-500 font-medium" role="menuitem" tabindex="-1"> -->
-                                                        @csrf
-                                                        @method('PUT')
+                                                    @csrf
+                                                    @method('PUT')
 
-                                                        
-                                                        <input type="hidden" name="status" value="{{$item->status}}">
-                                                        
-                                                        <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors text-xs">完了日<br>{{ $item->updated_at }}</button>
+
+                                                    <input type="hidden" name="status" value="{{$item->status}}">
+
+                                                    <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors text-xs">完了日<br>{{ $item->updated_at }}</button>
                                                     <!-- </form> -->
                                                 </div>
 
@@ -176,8 +188,8 @@
                     </div>
                 </div>
                 @endif
-        
-                
+
+
 
             </div>
         </div>
