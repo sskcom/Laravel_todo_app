@@ -16,13 +16,24 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // $tasks = Task::all();
-        $tasks = Task::where('user_id', auth()->id())->
+        // $before_tasks = Task::all();
+        
+        //完了前のタスクを取得
+        $before_tasks = Task::where('user_id', auth()->id())->
                        where('status', false)->
                        get();
 
+        //完了後のタスクを取得
+        $after_tasks = Task::where('user_id', auth()->id())->
+        where('status', true)->
+        get();
 
-        return view('dboard.dashboard', compact('tasks'));
+        // return view('dboard.dashboard', compact('before_tasks'));
+
+        return view('dboard.dashboard', [
+            'before_tasks' => $before_tasks,
+            'after_tasks' => $after_tasks,
+        ]);
     }
 
     /**
@@ -126,14 +137,16 @@ class TaskController extends Controller
             $task->save();
         } else {
             //「完了」ボタンを押したとき
+            
 
+            
             //該当のタスクを検索
             $task = Task::find($id);
 
-            //モデル->カラム名 = 値 で、データを割り当てる
+            // //モデル->カラム名 = 値 で、データを割り当てる
             $task->status = true; //true:完了、false:未完了
 
-            //データベースに保存
+            // //データベースに保存
             $task->save();
         }
 

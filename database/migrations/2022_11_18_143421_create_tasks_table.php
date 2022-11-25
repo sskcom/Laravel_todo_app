@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-
+            $table->increments('id')->primary();
             $table->integer('user_id');
-            $table->increments('todo_id');
             $table->string('name', 100);
             $table->boolean('status')->default(false);
             $table->timestamp('updated_at')->useCurrent()->nullable();
