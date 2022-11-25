@@ -67,7 +67,7 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
 
-                                    <div>{{$before_tasks}}</div>
+                                
                                     @foreach ($before_tasks as $item)
                                     <tr>
                                         <td class="px-3 py-4 text-sm text-gray-500">
@@ -124,7 +124,7 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
-                                            タスク</th>
+                                            完了タスク</th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -142,15 +142,15 @@
                                             <div class="flex justify-end">
 
                                                 <div>
-                                                    <form action="/dboard/{{ $item->id }}" method="post" class="inline-block text-gray-500 font-medium" role="menuitem" tabindex="-1">
+                                                    <!-- <form action="/dboard/{{ $item->id }}" method="post" class="inline-block text-gray-500 font-medium" role="menuitem" tabindex="-1"> -->
                                                         @csrf
                                                         @method('PUT')
 
                                                         
                                                         <input type="hidden" name="status" value="{{$item->status}}">
                                                         
-                                                        <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors">完了日</button>
-                                                    </form>
+                                                        <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors text-xs">完了日<br>{{ $item->updated_at }}</button>
+                                                    <!-- </form> -->
                                                 </div>
 
 
