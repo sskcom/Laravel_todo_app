@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Task; //追加
 use Illuminate\Support\Facades\Validator; //追加
 
+
 class TaskController extends Controller
 {
     /**
@@ -16,12 +17,12 @@ class TaskController extends Controller
     public function index()
     {
         // $tasks = Task::all();
-        $tasks = Task::where('status', false)->get();
+        $tasks = Task::where('user_id', auth()->id())->
+                       where('status', false)->
+                       get();
 
 
         return view('dboard.dashboard', compact('tasks'));
-
-
     }
 
     /**
@@ -57,6 +58,11 @@ class TaskController extends Controller
 
         //モデル->カラム名 = 値 で、データを割り当てる
         $task->name = $request->input('task_name');
+        $task->user_id = auth()->id();
+
+
+
+
 
         //データベースに保存
         $task->save();

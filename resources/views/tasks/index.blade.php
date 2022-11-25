@@ -25,13 +25,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="py-[100px]">
                 <p class="text-2xl font-bold text-center">今日は何する？</p>
-                
                 <!-- <form action="/tasks" method="post" class="mt-10">  -->
                 <form action="/dboard" method="post" class="mt-10">
                     @csrf
 
                     <div class="flex flex-col items-center">
                         <label class="w-full max-w-3xl mx-auto">
+            
                             <input class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-4 pl-4 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="洗濯物をする..." type="text" name="task_name" />
                             @error('task_name')
                             <div class="mt-3">
@@ -86,8 +86,8 @@
                                                         <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors">完了</button>
                                                     </form>
                                                 </div>
-                                                
-                                               
+
+
 
                                                 <div>
                                                     <a href="/tasks/{{ $item->id }}/edit/" class="inline-block text-center py-4 w-20 underline underline-offset-2 text-sky-600 md:hover:bg-sky-100 transition-colors">編集</a>
