@@ -14,19 +14,38 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    private $method_action_key = 'method_action_key';
+
+    public function index(Request $request)
     {
-        // $before_tasks = Task::all();
-        
+        $action = session()->get($this->method_action_key);
+        $is_reload = ($action == '');
+
+        if (is_null($action)) {
+            //$reload_text = '初期表示です。';
+            // dd("初期表示です");
+            //モデルをインスタンス化
+            // $task = new Task;
+
+            //モデル->カラム名 = 値 で、データを割り当てる
+            // task->Deadline = $request->input('Deadline');
+            // $task->save();
+
+        } else if ($is_reload) {
+            //$reload_text = 'リロードです。';
+            dd("リロードです");
+        } else {
+            //$reload_text = '画面遷移です。';
+            dd("画面遷移です");
+        }
+
+
+
         //完了前のタスクを取得
-        $before_tasks = Task::where('user_id', auth()->id())->
-                       where('status', false)->
-                       get();
+        $before_tasks = Task::where('user_id', auth()->id())->where('status', false)->get();
 
         //完了後のタスクを取得
-        $after_tasks = Task::where('user_id', auth()->id())->
-        where('status', true)->
-        get();
+        $after_tasks = Task::where('user_id', auth()->id())->where('status', true)->get();
 
         // return view('dboard.dashboard', compact('before_tasks'));
 
@@ -54,6 +73,9 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         $rules = [
             'task_name' => 'required|max:100',
         ];
@@ -68,6 +90,8 @@ class TaskController extends Controller
         $task = new Task;
 
         //モデル->カラム名 = 値 で、データを割り当てる
+        // dd($request->input('Deadline'));
+        // $task->Deadline = $request->input('Deadline');
         $task->name = $request->input('task_name');
         $task->user_id = auth()->id();
 
@@ -116,6 +140,33 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
 
+
+        if ($request->deadline === null) {
+            exit;
+
+            //期限の完了ボタンを押した時
+        } else {
+
+            //検索するタスクのidを取り出す
+            $id = explode("/", $request->getPathInfo());
+
+
+            $id = $id[2];
+
+            //該当のタスクを検索
+            $task = Task::find($id);
+
+            
+
+            //モデル->カラム名 = 値 で、データを割り当てる
+            $task->Deadline = $request->deadline;
+
+            // //データベースに保存
+            $task->save();
+        }
+
+
+
         //「編集する」ボタンをおしたとき
         if ($request->status === null) {
             $rules = [
@@ -137,24 +188,26 @@ class TaskController extends Controller
             $task->save();
         } else {
             //「完了」ボタンを押したとき
-            
 
-            
+
+
             //該当のタスクを検索
             $task = Task::find($id);
 
             // //モデル->カラム名 = 値 で、データを割り当てる
             $task->status = true; //true:完了、false:未完了
 
-          
+
 
             // //データベースに保存
             $task->save();
+
+            //リダイレクト
+            return redirect('/dboard');
         }
 
 
         //リダイレクト
-        // return redirect('/tasks');
         return redirect('/dboard');
     }
 

@@ -60,6 +60,8 @@
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
                                             タスク</th>
+                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
+                                            期限</th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -75,19 +77,36 @@
                                                 {{ $item->name }}
                                             </div>
                                         </td>
+
+                                        <td class="w-1/4">
+
+                                            <form action="/dboard/{{ $item->id }}" method="post" class=" text-gray-500 font-medium flex flex-row" role="menuitem" tabindex="-1">
+                                                @csrf
+                                                @method('PUT')
+
+
+                                                <input class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-4 px-10 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="いつまでにやる？　20XX/XX/XX" type="text" name="deadline" value="{{ $item->Deadline }}" />
+
+                                                
+                                                <button type="submit" class="bg-emerald-700 py-4  w-20 text-white md:hover:bg-emerald-800 transition-colors">決定</button>
+                                            </form>
+
+                                        </td>
+
+
                                         <td class="p-0 text-right text-sm font-medium">
                                             <div class="flex justify-end">
 
                                                 <div>
-                                                    
-                                                        @csrf
-                                                        @method('PUT')
 
-                                                        {{-- 追記 --}}
-                                                        <input type="hidden" name="status" value="{{$item->status}}">
-                                                        {{-- 追記 --}}
-                                                        <button type="submit" class="bg-amber-700 py-4 w-20 text-white  transition-colors text-xs">更新日<br>{{ $item->updated_at }}</button>
-                                                    
+                                                    @csrf
+                                                    @method('PUT')
+
+                                                    {{-- 追記 --}}
+                                                    <input type="hidden" name="status" value="{{$item->status}}">
+                                                    {{-- 追記 --}}
+                                                    <button type="submit" class="bg-amber-700 py-4 w-20 text-white  transition-colors text-xs">更新日<br>{{ $item->updated_at }}</button>
+
                                                 </div>
 
                                                 <div>
@@ -97,6 +116,7 @@
 
                                                         {{-- 追記 --}}
                                                         <input type="hidden" name="status" value="{{$item->status}}">
+
                                                         {{-- 追記 --}}
                                                         <button type="submit" class="bg-emerald-700 py-4 w-20 text-white md:hover:bg-emerald-800 transition-colors">完了</button>
                                                     </form>
