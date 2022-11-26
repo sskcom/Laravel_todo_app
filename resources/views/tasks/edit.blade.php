@@ -22,7 +22,7 @@
       <main class="grow grid place-items-center">
           <div class="w-full mx-auto px-4 sm:px-6">
               <div class="py-[100px]">
-                  <form action="/tasks/{{ $task->id }}" method="post" class="mt-10">
+                  <form action="/dboard/{{ $task->id }}" method="post" class="mt-10">
                       @csrf
                       @method('PUT')
   
@@ -41,7 +41,7 @@
                           </label>
   
                           <div class="mt-8 w-full flex items-center justify-center gap-10">
-                              <a href="/tasks" class="block shrink-0 underline underline-offset-2">
+                              <a href="/dboard" class="block shrink-0 underline underline-offset-2">
                                   戻る
                               </a>
                               <button type="submit"

@@ -142,7 +142,7 @@ class TaskController extends Controller
 
 
         if ($request->deadline === null) {
-            exit;
+            //何も処理しない
 
             //期限の完了ボタンを押した時
         } else {
